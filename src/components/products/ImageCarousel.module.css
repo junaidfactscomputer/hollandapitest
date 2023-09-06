@@ -1,0 +1,93 @@
+.text {
+  background-color: #04aa6d;
+  color: white;
+  font-size: 16px;
+  padding: 16px 32px;
+}
+
+.container {
+  position: relative;
+  max-width: 600px;
+  margin: auto;
+}
+
+.buttonBack {
+  position: absolute;
+  z-index: 999;
+  width: 43px;
+  height: 43px;
+  background: #fafafa;
+  border: 1px;
+  border-radius: 100%;
+  color: grey;
+  opacity: 0.4;
+  cursor: pointer;
+  display: flex;
+  padding-left: 15px;
+  justify-content: center;
+  align-items: center;
+  top: 50%;
+  left: 0;
+  transform: translateY(-50%);
+}
+.buttonBack:hover {
+  opacity: 1;
+}
+
+.buttonNext {
+  position: absolute;
+  z-index: 999;
+  width: 43px;
+  height: 43px;
+  background: #fafafa;
+  border: 1px;
+  border-radius: 100%;
+  color: grey;
+  opacity: 0.4;
+  cursor: pointer;
+  display: flex;
+  padding-left: 7px;
+  justify-content: center;
+  align-items: center;
+
+  top: 50%;
+  right: 0;
+  transform: translateY(-50%);
+}
+.buttonNext:hover {
+  opacity: 1;
+}
+
+.dotGroup {
+  text-align: center;
+}
+
+.glow {
+  border: solid;
+  border-color: #1c87c9;
+  cursor: pointer;
+  display: inline-block;
+  font-family: sans-serif;
+  font-size: 20px;
+  height: 100%;
+  text-align: center;
+  text-decoration: none;
+}
+
+@keyframes glowing {
+  0% {
+    border-color: #1c87c9;
+    box-shadow: 0 0 3px #1c87c9;
+  }
+  50% {
+    border-color: #1c87c9;
+    box-shadow: 0 0 10px #1c87c9;
+  }
+  100% {
+    border-color: #1c87c9;
+    box-shadow: 0 0 3px #1c87c9;
+  }
+}
+.glow {
+  animation: glowing 1300ms infinite;
+}
