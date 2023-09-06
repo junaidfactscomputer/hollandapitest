@@ -417,7 +417,8 @@ const ProductSearchResult = ({
                     }}
                   /> */}
                 </FlexBox>
-                {/* <FlexBox alignItems="left" sx={{ flexDirection: "column" }}>
+
+                <FlexBox alignItems="left" sx={{ flexDirection: "column" }}>
                   <Paragraph color="grey.600" whiteSpace="pre">
                     Sort by:
                   </Paragraph>
@@ -444,7 +445,7 @@ const ProductSearchResult = ({
                       </MenuItem>
                     ))}
                   </TextField>
-                </FlexBox> */}
+                </FlexBox>
 
                 <FlexBox alignItems="center" my="0.25rem">
                   {/* <Paragraph color="grey.600" mr={1}>
