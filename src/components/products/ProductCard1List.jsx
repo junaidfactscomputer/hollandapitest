@@ -17,7 +17,7 @@ const ProductCard1List = ({
         {/* <Grid item lg={4} sm={6} xs={12} key={item.id}> */}
         {products.map((item, index) => {
           return (
-            <Grid item lg={3} sm={6} xs={6} key={index}>
+            <Grid item lg={2.4} sm={6} xs={6} key={index}>
               <ProductCard1
                 id={item.ProductID}
                 slug={item.ProductPageLink}

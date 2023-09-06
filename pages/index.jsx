@@ -20,11 +20,16 @@ import MainLayout from "components/layouts/MainLayout";
 import ProductCard1List from "components/products/ProductCard1List";
 import { useRouter } from "next/router";
 import axios from "axios";
+import { months, years } from "data/months-years";
+import { format } from "date-fns";
+import { DatePicker, LocalizationProvider } from "@mui/lab";
+import DateFnsUtils from "@mui/lab/AdapterDateFns";
 const ProductSearchResult = ({
   productlist,
   sizeslist,
   topcategory,
   productCount,
+  disabledDates,
 }) => {
   const [view, setView] = useState("grid");
   const [products, setProducts] = useState([]);
@@ -40,7 +45,17 @@ const ProductSearchResult = ({
   const router = useRouter();
   //const { redirect } = router.query;
   const theme = useTheme();
+  const [dateList, setDateList] = useState([]);
 
+  const shouldDisableDate = (date) => {
+    // Check if the date is in the disabledDates array
+    return disabledDates.some(
+      (disabledDate) =>
+        date.getDate() === disabledDate.getDate() &&
+        date.getMonth() === disabledDate.getMonth() &&
+        date.getFullYear() === disabledDate.getFullYear()
+    );
+  };
   async function fetchData() {
     try {
       console.log("test");
@@ -74,15 +89,23 @@ const ProductSearchResult = ({
     }
   }
   useEffect(() => {
+    let list = [];
+    let today = new Date();
+    let dateCount = today.getDate();
+    list.push({
+      label: format(today, "dd MMMM"),
+      value: today.toISOString(),
+    });
+    for (let i = 1; i < 10; i++) {
+      today.setDate(dateCount + i);
+      list.push({
+        label: format(today, "dd MMMM"),
+        value: today.toISOString(),
+      });
+    }
+    setDateList(list);
     fetchData();
   }, []);
-
-  const [selectedDate, setSelectedDate] = useState(new Date());
-
-  const handleDateChange = (date) => {
-    setSelectedDate(date);
-    // You can add your sorting logic here using the selectedDate
-  };
 
   const handleFilterSelect = () => {
     // const inputString = "GRP4_01_02_03-GRP5_06_07_08";
@@ -289,76 +312,6 @@ const ProductSearchResult = ({
         disableGutters
         maxWidth={false}
       >
-        {downMd && (
-          <FlexBox alignItems="center" alignSelf="right">
-            <Card
-              elevation={1}
-              sx={{
-                mb: "24px",
-                display: "flex",
-                // flexWrap: "wrap",
-                flexDirection: "row",
-                alignItems: "center",
-                justifyContent: "space-between",
-                padding: false,
-                width: "95vw",
-                ml: -3,
-              }}
-            >
-              <FlexBox
-                alignItems="center"
-                columnGap={4}
-                flexWrap="wrap"
-                my={2}
-                px={2}
-              >
-                <FlexBox alignItems="center" gap={2}>
-                  <Paragraph color="grey.600" whiteSpace="pre">
-                    Sort by:
-                  </Paragraph>
-
-                  <TextField
-                    select
-                    fullWidth
-                    size="small"
-                    variant="outlined"
-                    placeholder="Sort by"
-                    defaultValue={sortOptions[0].value}
-                    sx={{
-                      flex: "1 1 0",
-                      minWidth: "150px",
-                    }}
-                  >
-                    {sortOptions.map((item) => (
-                      <MenuItem
-                        onClick={handleSortChange(item.value)}
-                        value={item.value}
-                        key={item.value}
-                      >
-                        {item.label}
-                      </MenuItem>
-                    ))}
-                  </TextField>
-                </FlexBox>
-              </FlexBox>
-              <FlexBox alignItems="center" my="0.25rem" mx={2}>
-                <Sidenav
-                  handle={
-                    <IconButton>
-                      <FilterList fontSize="small" />
-                    </IconButton>
-                  }
-                >
-                  {/* <ProductFilterCard
-                    sizes={sizes}
-                    onFilterChange={handleFilterChange}
-                    currentPage={pageno}
-                  /> */}
-                </Sidenav>
-              </FlexBox>
-            </Card>
-          </FlexBox>
-        )}
         <Grid container spacing={3}>
           {/* PRODUCT FILTER SIDEBAR AREA */}
           <Grid
@@ -370,120 +323,48 @@ const ProductSearchResult = ({
               },
             }}
             mt={1}
-            md={0}
             px={1}
+            md={12}
             // xs={2}
             // sm={2}
           >
             {/* TOP BAR AREA */}
             <Card
-              elevation={1}
               sx={{
-                mb: "12px",
-                display: "flex",
-                flexWrap: "wrap",
-                alignItems: "center",
-                justifyContent: "center",
-                p: {
-                  sm: "01rem 1.25rem",
-                  md: "0.5rem 1.25rem",
-                  xs: "1.25rem 1.25rem 0.25rem",
-                },
+                mb: 3,
+                py: 2,
               }}
             >
-              <FlexBox
-                alignItems="center"
-                columnGap={4}
-                flexWrap="wrap"
-                my="0.5rem"
-              >
-                <FlexBox alignItems="left" sx={{ flexDirection: "column" }}>
-                  {/* <Paragraph color="grey.600" whiteSpace="pre">
-                    Delivery Date:
-                  </Paragraph>
-
-                  <DatePicker
-                    fullWidth
-                    size="small"
-                    inputVariant="outlined"
-                    value={selectedDate}
-                    onChange={handleDateChange}
-                    renderInput={(params) => (
-                      <TextField {...params} placeholder=" Delivery Date" />
-                    )}
-                    sx={{
-                      flex: "1 1 0",
-                      minWidth: "150px",
-                    }}
-                  /> */}
-                </FlexBox>
-
-                <FlexBox alignItems="left" sx={{ flexDirection: "column" }}>
-                  <Paragraph color="grey.600" whiteSpace="pre">
-                    Sort by:
-                  </Paragraph>
-
-                  <TextField
-                    select
-                    fullWidth
-                    size="small"
-                    variant="outlined"
-                    placeholder="Sort by"
-                    defaultValue={sortOptions[0].value}
-                    sx={{
-                      flex: "1 1 0",
-                      minWidth: "150px",
-                    }}
-                  >
-                    {sortOptions.map((item) => (
-                      <MenuItem
-                        onClick={handleSortChange(item.value)}
-                        value={item.value}
-                        key={item.value}
-                      >
-                        {item.label}
-                      </MenuItem>
-                    ))}
-                  </TextField>
-                </FlexBox>
-
-                <FlexBox alignItems="center" my="0.25rem">
-                  {/* <Paragraph color="grey.600" mr={1}>
-                View:
-              </Paragraph>
-
-              <IconButton onClick={toggleView("grid")}>
-                <Apps
-                  color={view === "grid" ? "primary" : "inherit"}
-                  fontSize="small"
-                />
-              </IconButton>
-
-              <IconButton onClick={toggleView("list")}>
-                <ViewList
-                  color={view === "list" ? "primary" : "inherit"}
-                  fontSize="small"
-                />
-              </IconButton> */}
-
-                  {/* SHOW IN THE SMALL DEVICE */}
-                  {downMd && (
-                    <Sidenav
-                      handle={
-                        <IconButton>
-                          <FilterList fontSize="small" />
-                        </IconButton>
-                      }
+              <Box mb={3.5}>
+                <Grid container spacing={3}>
+                  <Grid item sm={4} xs={6}>
+                    <LocalizationProvider dateAdapter={DateFnsUtils}>
+                      <DatePicker
+                        label="Select Date"
+                        renderInput={(params) => (
+                          <TextField {...params} variant="standard" />
+                        )}
+                        shouldDisableDate={shouldDisableDate}
+                      />
+                    </LocalizationProvider>
+                    {/* <TextField
+                      select
+                      fullWidth
+                      type="text"
+                      name="date"
+                      label="Arrival Date"
+                      // onChange={handleChange}
+                      // value={values.date}
                     >
-                      {/* <ProductFilterCard
-                        sizes={sizes}
-                        onFilterChange={handleFilterChange}
-                        currentPage={pageno}
-                      /> */}
-                    </Sidenav>
-                  )}
-                </FlexBox>
-              </FlexBox>
+                      {dateList.map((item) => (
+                        <MenuItem value={item.value} key={item.label}>
+                          {item.label}
+                        </MenuItem>
+                      ))}
+                    </TextField> */}
+                  </Grid>
+                </Grid>
+              </Box>
             </Card>
             {/* <ProductFilterCard
               sizes={sizes}

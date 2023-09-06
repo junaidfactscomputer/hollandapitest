@@ -22,6 +22,7 @@
     ]
   },
   "dependencies": {
+    "@date-io/date-fns": "^2.17.0",
     "@emotion/cache": "^11.10.7",
     "@emotion/react": "^11.10.6",
     "@emotion/server": "^11.10.0",
@@ -35,7 +36,7 @@
     "clsx": "^1.2.1",
     "cross-env": "^7.0.3",
     "crypto-js": "^4.1.1",
-    "date-fns": "^2.29.3",
+    "date-fns": "^2.30.0",
     "emailjs": "^4.0.2",
     "formik": "^2.2.9",
     "fuse.js": "^6.6.2",
