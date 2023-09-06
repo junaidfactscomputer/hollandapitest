@@ -18,10 +18,10 @@ const MainLayout = ({ children, topbarBgColor, topcategory }) => {
     <Fragment>
       <Topbar bgColor={topbarBgColor} />
       {/* <Header isFixed={isFixed} /> */}
-      <StickyHeader>
+      {/* <StickyHeader>
         <Divider />
         {categoryNav}
-      </StickyHeader>
+      </StickyHeader> */}
 
       <div className="section-after-sticky">{children}</div>
       <MobileNavigationBar />
