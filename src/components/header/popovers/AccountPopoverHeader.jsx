@@ -1,6 +1,15 @@
 import React, { useState } from "react";
 import { signOut, useSession } from "next-auth/react";
-import { Avatar, Box, Button, IconButton, Menu, MenuItem, styled, useMediaQuery} from "@mui/material";
+import {
+  Avatar,
+  Box,
+  Button,
+  IconButton,
+  Menu,
+  MenuItem,
+  styled,
+  useMediaQuery,
+} from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 
 import Icon from "components/icons";
@@ -52,16 +61,17 @@ const AccountPopoverHeader = () => {
   return (
     <Box>
       <Button
-        sx={{
-          // padding: 0,
-        }}
+        sx={
+          {
+            // padding: 0,
+          }
+        }
         aria-haspopup="true"
         onClick={handleClick}
         aria-expanded={open ? "true" : undefined}
         aria-controls={open ? "account-menu" : undefined}
       >
-        {downMd?<>{session.user.initials}</>
-        :<>My Account</>}
+        {downMd ? <>{session.user.initials}</> : <>My Account</>}
         {/* <Avatar alt="Remy Sharp" src="/assets/images/avatars/001-man.svg" /> */}
       </Button>
 
@@ -114,12 +124,12 @@ const AccountPopoverHeader = () => {
           <H6>Welcome {session.user.name}!</H6>
           {/* <Small color="grey.500">Admin</Small> */}
         </Box>
-        
+
         <Divider />
-        
-        <MenuItem onClick={handleOnClickProfile}>Profile</MenuItem>
+
+        {/* <MenuItem onClick={handleOnClickProfile}>Profile</MenuItem>
         <MenuItem onClick={handleOnClickOrder}>My Orders</MenuItem>
-        <MenuItem onClick={handleOnClickCPW}>Change Password</MenuItem>
+        <MenuItem onClick={handleOnClickCPW}>Change Password</MenuItem> */}
         {/* <MenuItem>Settings</MenuItem> */}
 
         <Divider />

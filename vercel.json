@@ -1,8 +1,0 @@
-{
-  "functions": {
-    "myFunction": {
-      "memory": 512,
-      "timeout": 3000
-    }
-  }
-}

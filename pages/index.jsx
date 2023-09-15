@@ -18,12 +18,12 @@ import { FlexBox } from "components/flex-box";
 import { H5, Paragraph } from "components/Typography";
 import MainLayout from "components/layouts/MainLayout";
 import ProductCard1List from "components/products/ProductCard1List";
+import DatepickerMU from "components/form-controls/datepickerMU";
 import { useRouter } from "next/router";
 import axios from "axios";
-import { months, years } from "data/months-years";
-import { format } from "date-fns";
-import { DatePicker, LocalizationProvider } from "@mui/lab";
-import DateFnsUtils from "@mui/lab/AdapterDateFns";
+import getConfig from "next/config";
+import { useSession } from "next-auth/react";
+
 const ProductSearchResult = ({
   productlist,
   sizeslist,
@@ -34,6 +34,7 @@ const ProductSearchResult = ({
   const [view, setView] = useState("grid");
   const [products, setProducts] = useState([]);
   const [productsCount, setProductsCount] = useState([]);
+  const [deliveryDate, setdeliveryDate] = useState([]);
   const [sizes, setSizes] = useState(sizeslist);
   //const [pageUrl, setPageUrl] = useState(mainUrl);
   const [pageno, setPageno] = useState("1");
@@ -43,24 +44,15 @@ const ProductSearchResult = ({
   const downMd = useMediaQuery((theme) => theme.breakpoints.down("md"));
   const toggleView = useCallback((v) => () => setView(v), []);
   const router = useRouter();
-  //const { redirect } = router.query;
+  const { data: session } = useSession();
+  const { redirect } = router.query;
   const theme = useTheme();
-  const [dateList, setDateList] = useState([]);
-
-  const shouldDisableDate = (date) => {
-    // Check if the date is in the disabledDates array
-    return disabledDates.some(
-      (disabledDate) =>
-        date.getDate() === disabledDate.getDate() &&
-        date.getMonth() === disabledDate.getMonth() &&
-        date.getFullYear() === disabledDate.getFullYear()
-    );
-  };
+  const { publicRuntimeConfig } = getConfig();
+  const apiurl = publicRuntimeConfig.factsApiUrl + "Page/getopensection";
   async function fetchData() {
     try {
-      console.log("test");
       const response = await axios.post(
-        "https://domus.facts.ae/FEAPI/api/Page/getopensection",
+        apiurl,
         {
           containerId: ["CollectionProducts"],
           strCustomCategorySeoUrlKey: "tops-kurtis",
@@ -80,6 +72,7 @@ const ProductSearchResult = ({
       console.log(response.data[0].data.products);
       setProducts(response.data[0].data.products);
       setProductsCount(response.data[0].data.products.Table1[0].TOTAL_PRODUCTS);
+      setdeliveryDate(response.data[0].data.products.Table1[0].strDateDelivery);
       window.scrollTo({
         top: 0,
         behavior: "smooth",
@@ -88,24 +81,18 @@ const ProductSearchResult = ({
       console.error("Error:", error);
     }
   }
+
   useEffect(() => {
-    let list = [];
-    let today = new Date();
-    let dateCount = today.getDate();
-    list.push({
-      label: format(today, "dd MMMM"),
-      value: today.toISOString(),
-    });
-    for (let i = 1; i < 10; i++) {
-      today.setDate(dateCount + i);
-      list.push({
-        label: format(today, "dd MMMM"),
-        value: today.toISOString(),
-      });
-    }
-    setDateList(list);
     fetchData();
   }, []);
+
+  useEffect(() => {
+    if (!session?.user) {
+      router.push(redirect || "/login");
+    } else {
+      fetchData();
+    }
+  }, [router, session, redirect]);
 
   const handleFilterSelect = () => {
     // const inputString = "GRP4_01_02_03-GRP5_06_07_08";
@@ -295,16 +282,6 @@ const ProductSearchResult = ({
           mt: 3,
           mb: 5,
           paddingLeft: 3,
-          // "padding-left": {
-          //   //sm:  "0px !important",
-          //   // md: "0px !important",
-          //   // xs:  "0px !important",
-          // },
-          "padding-right": {
-            //  sm:  "0px !important",
-            md: "0px !important",
-            //  xs:  "0px !important",
-          },
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
@@ -338,30 +315,7 @@ const ProductSearchResult = ({
               <Box mb={3.5}>
                 <Grid container spacing={3}>
                   <Grid item sm={4} xs={6}>
-                    <LocalizationProvider dateAdapter={DateFnsUtils}>
-                      <DatePicker
-                        label="Select Date"
-                        renderInput={(params) => (
-                          <TextField {...params} variant="standard" />
-                        )}
-                        shouldDisableDate={shouldDisableDate}
-                      />
-                    </LocalizationProvider>
-                    {/* <TextField
-                      select
-                      fullWidth
-                      type="text"
-                      name="date"
-                      label="Arrival Date"
-                      // onChange={handleChange}
-                      // value={values.date}
-                    >
-                      {dateList.map((item) => (
-                        <MenuItem value={item.value} key={item.label}>
-                          {item.label}
-                        </MenuItem>
-                      ))}
-                    </TextField> */}
+                    <DatepickerMU strDateDelivery={deliveryDate} />
                   </Grid>
                 </Grid>
               </Box>

@@ -166,7 +166,7 @@ const ProductCard1 = ({
   AvailableStock,
   ProductWeight,
   StemLength,
-  bunch_value,
+  Price_MinimumQuantity,
 }) => {
   const router = useRouter();
   const [isHovering, setIsHovered] = useState(false);
@@ -365,7 +365,7 @@ const ProductCard1 = ({
                     {title}
                   </H3>
                   <Box color="grey.600" fontWeight="400">
-                    SU : {bunch_value}
+                    SU : {Price_MinimumQuantity}
                   </Box>
                   <Box color="grey.600" fontWeight="400">
                     Stem Length : {StemLength}
@@ -374,7 +374,7 @@ const ProductCard1 = ({
                     Stock : {AvailableStock}
                   </Box>
                   <Box color="grey.600" fontWeight="400">
-                    Weight : {ProductWeight}
+                    Origin : {iso_code_2}
                   </Box>
                 </Box>
 

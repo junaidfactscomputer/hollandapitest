@@ -183,7 +183,7 @@ export const getholexProducts = async (
   if (varpageno > 1) varnType = 2;
 
   const response = await axios.post(
-    "https://domus.facts.ae/FEAPI/api/Page/getopensection",
+    apiurl,
     {
       containerId: ["CollectionProducts"],
       strCustomCategorySeoUrlKey: "tops-kurtis",

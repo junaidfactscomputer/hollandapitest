@@ -88,8 +88,8 @@ const Newsletter = ({ image = "/assets/images/newsletter/WF-11-0318.jpg" }) => {
                 </H1> */}
 
                 <Paragraph color="grey.600" mb={5}>
-                  Subscribe to the Rupali online newsletter to receive timely
-                  updates from your favorite products.
+                  Subscribe to the online newsletter to receive timely updates
+                  from your favorite products.
                 </Paragraph>
 
                 <TextField

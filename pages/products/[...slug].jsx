@@ -4,18 +4,19 @@ import { Box, Container, styled, Tab, Tabs, useTheme } from "@mui/material";
 import { H2 } from "components/Typography";
 import MainLayout from "components/layouts/MainLayout";
 import ProductIntro from "components/products/ProductIntro";
-import ProductReview from "components/products/ProductReview";
-import RelatedProducts from "components/products/RelatedProducts";
-import RecentlyViewed from "components/products/RecentlyViewed";
-import ProductDescription from "components/products/ProductDescription";
-import api from "utils/__api__/products";
-import apihome from "utils/__api__/home";
+// import ProductReview from "components/products/ProductReview";
+// import RelatedProducts from "components/products/RelatedProducts";
+// import RecentlyViewed from "components/products/RecentlyViewed";
+// import ProductDescription from "components/products/ProductDescription";
+// import api from "utils/__api__/products";
+// import apihome from "utils/__api__/home";
 
-import Breadcrumbs from "@mui/material/Breadcrumbs";
-import Typography from "@mui/material/Typography";
-import Link from "@mui/material/Link";
-import Stack from "@mui/material/Stack";
+// import Breadcrumbs from "@mui/material/Breadcrumbs";
+// import Typography from "@mui/material/Typography";
+// import Link from "@mui/material/Link";
+// import Stack from "@mui/material/Stack";
 import axios from "axios";
+import getConfig from "next/config";
 //import { getuserCookie } from "lib";
 // import {
 //   getFrequentlyBought,
@@ -59,12 +60,15 @@ const ProductDetails = (props) => {
   const [products, setProducts] = useState([]);
   const theme = useTheme();
 
+  const { publicRuntimeConfig } = getConfig();
+
+  const apiurl = publicRuntimeConfig.factsApiUrl + "Page/getopensection";
   // Show a loading state when the fallback is rendered
   useEffect(() => {
     async function fetchData() {
       try {
         const response = await axios.post(
-          "https://domus.facts.ae/FEAPI/api/Page/getopensection",
+          apiurl,
           {
             containerId: ["ProductDetails"],
             strProductSeoUrl: productid,

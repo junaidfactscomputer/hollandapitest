@@ -6,8 +6,9 @@ import Header from "components/header/Header";
 import MegaNavbar from "components/navbar/MegaNavbar";
 import { MobileNavigationBar } from "components/mobile-navigation";
 import StickyHeader from "components/StickyHeader";
-
+import { useSession } from "next-auth/react";
 const MainLayout = ({ children, topbarBgColor, topcategory }) => {
+  const { data: session } = useSession();
   const categoryNav = (
     <MegaNavbar elevation={0} border={1} topcategories={topcategory} />
   );
@@ -17,14 +18,13 @@ const MainLayout = ({ children, topbarBgColor, topcategory }) => {
   return (
     <Fragment>
       <Topbar bgColor={topbarBgColor} />
-      {/* <Header isFixed={isFixed} /> */}
+      {session?.user && <Header isFixed={isFixed} />}
       {/* <StickyHeader>
         <Divider />
         {categoryNav}
       </StickyHeader> */}
-
       <div className="section-after-sticky">{children}</div>
-      <MobileNavigationBar />
+      {/* <MobileNavigationBar /> */}
       {/* <Footer1 /> */}
     </Fragment>
   );

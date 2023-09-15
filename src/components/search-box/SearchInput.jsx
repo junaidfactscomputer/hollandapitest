@@ -80,21 +80,21 @@ const SearchInput = () => {
               borderColor: "primary.main",
             },
           },
-          endAdornment: (
-            <Button
-              color="primary"
-              disableElevation
-              variant="contained"
-              onClick={handleSearchClick}
-              sx={{
-                px: "3rem",
-                height: "100%",
-                borderRadius: "0 300px 300px 0",
-              }}
-            >
-              Search
-            </Button>
-          ),
+          // endAdornment: (
+          //   <Button
+          //     color="primary"
+          //     disableElevation
+          //     variant="contained"
+          //     onClick={handleSearchClick}
+          //     sx={{
+          //       px: "3rem",
+          //       height: "100%",
+          //       borderRadius: "0 300px 300px 0",
+          //     }}
+          //   >
+          //     Search
+          //   </Button>
+          // ),
           startAdornment: <SearchOutlinedIcon fontSize="small" />,
         }}
       />
@@ -119,7 +119,8 @@ const SearchInput = () => {
                   }}
                   // className={ compStyling.glow}
                 />
-                {item.ProductDescription1} {item.ProductDescription2}
+                {item.ProductDescription1}
+                {/* {item.ProductDescription2} */}
               </MenuItem>
             </Link>
           ))}

@@ -10,12 +10,12 @@ module.exports = {
     paymentRedirectUrl:
       "https://test.sagepay.com/gateway/service/vspform-register.vsp",
     paymentFailUrl: "http://www.staging.rupalionline.com/api/paymentfailed",
-    nextAuthUrl: process.env.NEXTAUTH_URL,
-    nextAuthSecret: process.env.NEXTAUTH_SECRET, // Pass through env variables
+    nextAuthUrl: "https://hollandapidemo.facts.ae", //http://hollandapidemo.facts.ae/  http://localhost:3000
+    nextAuthSecret: "Ey7nTKnggBc0bRN8WUjyShw2qzOZ6KW4fUyqcKBePxY=", // Pass through env variables
   },
 
   publicRuntimeConfig: {
-    // Available on both server and client
+    // Available on both server and client  "https://domus.facts.ae/FEAPI/api/"
     factsApiUrl: "https://domus.facts.ae/FEAPI/api/",
     theme: "DEFAULT",
     currency: "GBP",
@@ -31,14 +31,14 @@ module.exports = {
   images: {
     domains: ["p7.1ps.nl"],
   },
-  async rewrites() {
-    return [
-      {
-        source: "/api/:path*",
-        destination: "http://185.34.156.243:81/AxerrioServer/:path*",
-      },
-    ];
-  },
+  // async rewrites() {
+  //   return [
+  //     {
+  //       source: "/api/:path*",
+  //       destination: "http://185.34.156.243:81/AxerrioServer/:path*",
+  //     },
+  //   ];
+  // },
   // webpack5: true,
   // webpack: (config) => {
   //   config.resolve.fallback = {

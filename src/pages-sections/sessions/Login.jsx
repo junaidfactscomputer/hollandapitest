@@ -67,29 +67,18 @@ const Login = () => {
     setPasswordVisibility((visible) => !visible);
   }, []);
   const { enqueueSnackbar } = useSnackbar();
-  // const handleFormSubmit = async (values) => {
-  //   console.log(values);
-  // };
 
-  // const handleFormSubmit = async (e) => {
-  //   e.preventDefault();
-  //   await signIn("credentials", {
-  //     redirect: true,
-  //     email: values.email,
-  //     password: values.password,
-  //   });
-  // };
   const cartId = getuserCookie();
   const handleFormSubmit = async ({ email, password }) => {
     try {
-      const cart = state.cart;
+      //const cart = state.cart;
       const result = await signIn("credentials", {
         redirect: false,
         email,
         password,
-        cartId: cartId,
+        cartId: email,
       });
-
+      console.log(result);
       if (result.error) {
         SetLoginerror(result.error);
         enqueueSnackbar(result.error, {
@@ -108,13 +97,10 @@ const Login = () => {
 
   useEffect(() => {
     if (session?.user) {
-      // dispatch({
-      //   type: "LOGIN",
-      // });
-      fetchCartData();
-      Cookies.set("MMUserId", session.user._id);
-      const redurl = Cookies.get("_redurl");
-      router.replace(redurl || "/");
+      // fetchCartData();
+      //  Cookies.set("MMUserId", session.user._id);
+      //  const redurl = Cookies.get("_redurl");
+      // router.replace("/");
     }
   }, []);
 
@@ -149,10 +135,10 @@ const Login = () => {
   useEffect(() => {
     if (session?.user) {
       //  console.log(session.user._id);
-      fetchCartData();
-      Cookies.set("MMUserId", session.user._id);
-      const redurl = Cookies.get("_redurl");
-      router.replace(redurl || "/");
+      //fetchCartData();
+      // Cookies.set("MMUserId", session.user._id);
+      // const redurl = Cookies.get("_redurl");
+      router.replace("/");
     }
   }, [router, session, redirect]);
 
@@ -174,7 +160,7 @@ const Login = () => {
         /> */}
 
         <H1 textAlign="center" mt={1} mb={4} fontSize={16}>
-          Login To Rupali Online
+          Login
         </H1>
 
         <BazaarTextField
@@ -182,15 +168,13 @@ const Login = () => {
           fullWidth
           name="email"
           size="small"
-          type="email"
+          type="text"
           variant="outlined"
           onBlur={handleBlur}
           value={values.email}
           onChange={handleChange}
-          label="Email or Phone Number"
-          placeholder="Enter your email or phone number"
-          error={!!touched.email && !!errors.email}
-          helperText={touched.email && errors.email}
+          label="User Name"
+          placeholder="Enter your User Name"
         />
 
         <BazaarTextField
@@ -235,13 +219,7 @@ const Login = () => {
         </Button>
       </form>
 
-      {() => {
-        if (SocialButtonsVisible) {
-          <SocialButtons />;
-        }
-      }}
-
-      <FlexRowCenter mt="1.25rem">
+      {/* <FlexRowCenter mt="1.25rem">
         <Box>Don&apos;t have account?</Box>
         <Link href="/signup" passHref legacyBehavior>
           <H6
@@ -253,9 +231,9 @@ const Login = () => {
             Sign Up
           </H6>
         </Link>
-      </FlexRowCenter>
+      </FlexRowCenter> */}
 
-      <FlexBox
+      {/* <FlexBox
         justifyContent="center"
         bgcolor="grey.200"
         borderRadius="4px"
@@ -273,7 +251,7 @@ const Login = () => {
             Reset It
           </H6>
         </Link>
-      </FlexBox>
+      </FlexBox> */}
     </Wrapper>
   );
 };
@@ -283,24 +261,6 @@ const initialValues = {
 };
 const formSchema = yup.object().shape({
   password: yup.string().required("Password is required"),
-  email: yup.string().email("invalid email").required("Email is required"),
 });
-
-// export async function getServerSideProps(context) {
-//   const { query, req, res } = context;
-//   var error = "";
-//   if (Boolean(query.error)) {
-//     error = query.error;
-//   }
-
-//   try {
-//     const secret = process.env.NEXTAUTH_SECRET;
-//     const token = await getToken({ req, secret });
-
-//     return { props: { providers: await getProviders(), loginError: error } };
-//   } catch (e) {
-//     return { props: { providers: await getProviders(), loginError: error } };
-//   }
-// }
 
 export default Login;

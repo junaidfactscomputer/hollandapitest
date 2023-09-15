@@ -32,8 +32,8 @@ export const HeaderWrapper = styled(Box)(({ theme }) => ({
   [theme.breakpoints.down("sm")]: {
     height: layoutConstant.mobileHeaderHeight,
   },
-  paddingLeft:'5vw',
-  paddingRight:'5vw'
+  paddingLeft: "5vw",
+  paddingRight: "5vw",
 }));
 const StyledContainer = styled(Container)({
   gap: 2,
@@ -41,7 +41,6 @@ const StyledContainer = styled(Container)({
   display: "flex",
   alignItems: "center",
   justifyContent: "space-between",
-  
 });
 
 // ==============================================================
@@ -88,7 +87,7 @@ const Header = ({ isFixed, className, searchInput }) => {
           zIndex: 9999,
         }}
       >
-        <MiniCart toggleSidenav={toggleSidenav} />
+        {/* <MiniCart toggleSidenav={toggleSidenav} /> */}
       </Drawer>
     </Fragment>
   );
@@ -104,13 +103,13 @@ const Header = ({ isFixed, className, searchInput }) => {
         <StyledContainer>
           <FlexBetween width="100%">
             {/* LEFT CONTENT - NAVIGATION ICON BUTTON */}
-            <Box flex={1}>
+            {/* <Box flex={1}>
               <MobileMenu />
-            </Box>
+            </Box> */}
 
             {/* MIDDLE CONTENT - LOGO */}
             <Link href="/">
-              <Image height={37} src="/assets/images/logo40.png" alt="logo" />
+              <Image height={37} src="/assets/images/logo2.jpg" alt="logo" />
             </Link>
 
             {/* RIGHT CONTENT - LOGIN, CART, SEARCH BUTTON */}
@@ -122,13 +121,12 @@ const Header = ({ isFixed, className, searchInput }) => {
               {/* <Box component={IconButton} onClick={toggleDialog}>
                 <Icon.User sx={ICON_STYLE} />
               </Box> */}
-
-              
+              {/* 
               <Box component={IconButton} onClick={toggleSidenav}>
                 <Badge badgeContent={state.cart.length} color="primary">
                   <Icon.CartBag sx={ICON_STYLE} />
                 </Badge>
-              </Box>
+              </Box> */}
               {!session && (
                 <Box
                   component={IconButton}
@@ -160,7 +158,7 @@ const Header = ({ isFixed, className, searchInput }) => {
               }}
             >
               <FlexBetween mb={1}>
-                <Paragraph>Search to Rupali</Paragraph>
+                <Paragraph>Search </Paragraph>
 
                 <IconButton onClick={toggleSearchBar}>
                   <Clear />
@@ -205,7 +203,7 @@ const Header = ({ isFixed, className, searchInput }) => {
 
         {/* LOGIN AND CART BUTTON */}
         <FlexBox gap={1.5} alignItems="center">
-          <Badge badgeContent={state.cart.length} color="primary">
+          {/* <Badge badgeContent={state.cart.length} color="primary">
             <Box
               p={1.25}
               bgcolor="grey.200"
@@ -215,7 +213,7 @@ const Header = ({ isFixed, className, searchInput }) => {
               <ShoppingBagOutlined />
             </Box>
           </Badge>
-
+        */}
           {session && <AccountPopoverHeader />}
 
           {!session && (
